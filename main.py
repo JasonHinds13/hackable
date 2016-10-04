@@ -20,8 +20,10 @@ def search(item):
 def shopapi():
     g.db = connect_db()
     curs = g.db.execute("SELECT * FROM shop_items")
-    items = [dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]
-    return jsonify(items)
+    cur2 = g.db.execute("SELECT * FROM employees")
+    items = [{'items':[dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]}]
+    empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
+    return jsonify(items+empls)
 
 def connect_db():
     return sqlite3.connect(app.database)
