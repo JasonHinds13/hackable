@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Store Homepage{% endblock %}
+
+{% block content %}
+
+<div id="content">
+
+<br><br>
+
+<h1>Welcome To BasicStore Online</h1>
+<h2>Search For An Item</h2><br>
+
+<input type="text" id="searchItem" value="{{item}}"/>
+<input class="button" type="submit" value="Search" onclick="search()"/>
+
+<br><br>
+
+<table>
+<tr>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Price</th>
+</tr>
+{% for res in results %}
+    <tr>
+        <td>{{res["name"]}}</td>
+        <td>{{res["quantity"]}}</td>
+        <td>{{res["price"]}}</td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}

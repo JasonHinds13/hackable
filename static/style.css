@@ -1,0 +1,27 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.button{
+    background-color: blue;
+    color: white;
+    border: none;
+    height: 25px;
+    width: 100px;
+    font-weight: bold;
+}
+
+#content{
+    margin: auto;
+    width: 1000px;
+    text-align: center;
+    border: 2px solid blue;
+    padding-bottom: 30px;
+}
+
+table{
+    margin-left: center;
+    margin-right: center;
+    width: 50%;
+}
