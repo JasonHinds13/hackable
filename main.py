@@ -25,6 +25,10 @@ def shopapi():
     empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
     return jsonify(items+empls)
 
+@app.errorhandler(500)
+def internal_server_error(error):
+    return 'Error: %s' %error
+
 def connect_db():
     return sqlite3.connect(app.database)
 
