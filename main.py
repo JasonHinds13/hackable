@@ -35,4 +35,4 @@ def connect_db():
     return sqlite3.connect(app.database)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0') #runs on machine ip address to make it visible on netowrk
