@@ -11,13 +11,15 @@ def index():
 @app.route('/<item>')
 def search(item):
     g.db = connect_db()
+    #curs = g.db.execute("SELECT * FROM shop_items WHERE name=?", item)
     curs = g.db.execute("SELECT * FROM shop_items WHERE name = '%s'" %item)
     results = [dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]
     g.db.close()
     return render_template('index.html', results=results, item=item)
 
-@app.route('/shopAPI')
-def shopapi():
+#API route
+@app.route('/api/v1.0/storeAPI', methods=['GET'])
+def storeapi():
     g.db = connect_db()
     curs = g.db.execute("SELECT * FROM shop_items")
     cur2 = g.db.execute("SELECT * FROM employees")
