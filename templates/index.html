@@ -11,8 +11,10 @@
 <h1>Welcome To BasicStore Online</h1>
 <h2>Search For An Item</h2><br>
 
-<input type="text" id="searchItem" value="{{item}}"/>
-<input class="button" type="submit" value="Search" onclick="search()"/>
+<form action="?" method="GET" onsubmit="search();return false;">
+	<input type="text" id="searchItem" value="{{item}}"/>
+	<input class="button" type="submit" value="Search" />
+</form>
 
 <br><br>
 
