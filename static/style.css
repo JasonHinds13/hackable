@@ -25,3 +25,35 @@ table{
     margin-right: center;
     width: 50%;
 }
+
+#navbar
+{
+  position: relative;
+}
+
+#navbar ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: blue;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#navbar ul li
+{
+    float: left;
+}
+
+#navbar ul li a
+{
+    display: block;
+    color: white;
+    border-radius: 5px 5px;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}

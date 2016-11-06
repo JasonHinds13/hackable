@@ -40,6 +40,16 @@ function addItem(){
     });
 }
 
+$(document).ready(function(){
+
+    $("#navbar ul li a").on('click', function(event){
+        event.preventDefault();
+        var page = $(this).attr("href");
+    
+        $("#main").load(page);
+    });
+});
+
 
 
 
