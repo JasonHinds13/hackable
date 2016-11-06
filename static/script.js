@@ -1,7 +1,8 @@
-//search using our API
+//Using our API
+
 function search(){
     var item = document.getElementById("searchItem").value;
-        
+
     $.ajax('/api/v1.0/storeAPI/'+item,{
         method: 'GET',
     }).done(function(res){
@@ -19,5 +20,26 @@ function search(){
         $("#stat").html(err);
     });
 }
+
+function addItem(){
+    var name = document.getElementById("itemName").value;
+    var quan = document.getElementById("itemQuantity").value;
+    var price = document.getElementById("itemPrice").value;
+
+    var dat = {'name':name, 'quantity':quan, 'price':price};
+
+    $.ajax('/api/v1.0/storeAPI',{
+        method: 'POST',
+        data: JSON.stringify(dat),
+        dataType: "json",
+        contentType: "application/json",
+    }).done(function(res){
+        $("#stat").html("Successfully Added");
+    }).fail(function(err){
+        $("#stat").html("Error Sending Request");
+    });
+}
+
+
 
 
