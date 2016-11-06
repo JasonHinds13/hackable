@@ -6,18 +6,9 @@ app.database = "sample.db"
 
 @app.route('/')
 def index():
-    return render_template('index.html', results=[], item='')
+    return render_template('index.html')
 
-@app.route('/<item>')
-def search(item):
-    g.db = connect_db()
-    #curs = g.db.execute("SELECT * FROM shop_items WHERE name=?", item)
-    curs = g.db.execute("SELECT * FROM shop_items WHERE name = '%s'" %item)
-    results = [dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]
-    g.db.close()
-    return render_template('index.html', results=results, item=item)
-
-#API route
+#API routes
 @app.route('/api/v1.0/storeAPI', methods=['GET'])
 def storeapi():
     g.db = connect_db()
@@ -25,7 +16,17 @@ def storeapi():
     cur2 = g.db.execute("SELECT * FROM employees")
     items = [{'items':[dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]}]
     empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
+    g.db.close()
     return jsonify(items+empls)
+
+@app.route('/api/v1.0/storeAPI/<item>', methods=['GET'])
+def searchAPI(item):
+    g.db = connect_db()
+    #curs = g.db.execute("SELECT * FROM shop_items WHERE name=?", item) #The safe way to actually get data from db
+    curs = g.db.execute("SELECT * FROM shop_items WHERE name = '%s'" %item)
+    results = [dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]
+    g.db.close()
+    return jsonify(results)
 
 @app.errorhandler(500)
 def internal_server_error(error):
