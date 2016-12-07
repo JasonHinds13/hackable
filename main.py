@@ -8,9 +8,27 @@ app.database = "sample.db"
 def index():
     return render_template('index.html')
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 @app.route('/restock')
 def restock():
     return render_template('restock.html')
+
+#API routes
+@app.route('/api/v1.0/storeLoginAPI/', methods=['POST'])
+def loginAPI():
+    if request.method == 'POST':
+        uname,pword = (request.json['username'],request.json['password'])
+        g.db = connect_db()
+        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, pword))
+        if cur.fetchone():
+            result = {'status': 'success'}
+        else:
+            result = {'status': 'fail'}
+        g.db.close()
+        return jsonify(result)
 
 #API routes
 @app.route('/api/v1.0/storeAPI', methods=['GET', 'POST'])
@@ -23,7 +41,7 @@ def storeapi():
         empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
         g.db.close()
         return jsonify(items+empls)
-        
+
     elif request.method == 'POST':
         g.db = connect_db()
         name,quan,price = (request.json['name'],request.json['quantity'],request.json['price'])
