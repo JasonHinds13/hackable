@@ -59,9 +59,13 @@ def searchAPI(item):
     g.db.close()
     return jsonify(results)
 
+@app.errorhandler(404)
+def page_not_found_error(error):
+    return render_template('error.html', error=error)
+
 @app.errorhandler(500)
 def internal_server_error(error):
-    return 'Error: %s' %error
+    return render_template('error.html', error=error)
 
 def connect_db():
     return sqlite3.connect(app.database)
