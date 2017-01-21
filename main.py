@@ -1,4 +1,4 @@
-import sqlite3, os
+import sqlite3, os, hashlib
 from flask import Flask, jsonify, render_template, request, g
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def loginAPI():
     if request.method == 'POST':
         uname,pword = (request.json['username'],request.json['password'])
         g.db = connect_db()
-        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, pword))
+        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
         if cur.fetchone():
             result = {'status': 'success'}
         else:
@@ -30,7 +30,6 @@ def loginAPI():
         g.db.close()
         return jsonify(result)
 
-#API routes
 @app.route('/api/v1.0/storeAPI', methods=['GET', 'POST'])
 def storeapi():
     if request.method == 'GET':
@@ -70,21 +69,27 @@ def internal_server_error(error):
 def connect_db():
     return sqlite3.connect(app.database)
 
+# Create password hashes
+def hash_pass(passw):
+	m = hashlib.md5()
+	m.update(passw)
+	return m.hexdigest()
+
 if __name__ == "__main__":
 
     #create database if it doesn't exist yet
-    if not os.path.exists('sample.db'):
-        with sqlite3.connect("sample.db") as connection:
+    if not os.path.exists(app.database):
+        with sqlite3.connect(app.database) as connection:
             c = connection.cursor()
             c.execute("""CREATE TABLE shop_items(name TEXT, quantitiy TEXT, price TEXT)""")
             c.execute("""CREATE TABLE employees(username TEXT, password TEXT)""")
             c.execute('INSERT INTO shop_items VALUES("water", "40", "100")')
             c.execute('INSERT INTO shop_items VALUES("juice", "40", "110")')
             c.execute('INSERT INTO shop_items VALUES("candy", "100", "10")')
-            c.execute('INSERT INTO employees VALUES("itsjasonh", "badword")')
-            c.execute('INSERT INTO employees VALUES("theeguy9", "badpassword")')
-            c.execute('INSERT INTO employees VALUES("newguy29", "pass123")')
+            c.execute('INSERT INTO employees VALUES("itsjasonh", "{}")'.format(hash_pass("badword")))
+            c.execute('INSERT INTO employees VALUES("theeguy9", "{}")'.format(hash_pass("badpassword")))
+            c.execute('INSERT INTO employees VALUES("newguy29", "{}")'.format(hash_pass("pass123")))
             connection.commit()
             connection.close()
 
-    app.run(host='0.0.0.0') #runs on machine ip address to make it visible on netowrk
+    app.run(host='0.0.0.0') # runs on machine ip address to make it visible on netowrk
