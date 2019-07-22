@@ -72,7 +72,7 @@ def connect_db():
 # Create password hashes
 def hash_pass(passw):
 	m = hashlib.md5()
-	m.update(passw)
+	m.update(passw.encode('utf-8'))
 	return m.hexdigest()
 
 if __name__ == "__main__":
