@@ -1,32 +1,113 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        #navbar {
+            background-color: #73ff83;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        #navbar a {
+            float: left;
+            display: block;
+            color: #26656f;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        #navbar a:hover {
+            background-color: #26656f;
+            color: white;
+        }
+        #content {
+            text-align: center;
+            padding: 20px;
+        }
+        #content h1 {
+            font-size: 36px;
+            color: #26656f;
+        }
+        #content h2 {
+            font-size: 24px;
+            color: #26656f;
+        }
+        form {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+        .button {
+            background-color: #73ff83;
+            color: #26656f;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #26656f;
+            color: white;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #26656f;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #73ff83;
+            color: #26656f;
+        }
+        td {
+            background-color: white;
+        }
+        #banner {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="#">Cyber Search Items</a>
+        <a href="#">Login to Access</a>
+        <a href="#">Add Item</a>
+    </div>
+    <div id="content">
+        <img id="banner" src="C:\Users\orrin\Downloads\ungcyber.png" alt="UNG Cyber Store Banner">
+        <h2>Search For An Item</h2>
+        <form action="?" method="GET" onsubmit="search();return false;">
+            <input type="text" id="searchItem" value=""/>
+            <input class="button" type="submit" value="Search" />
+        </form>
+        <table id="results">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </table>
+        <p id="stat"></p>
+    </div>
+</body>
+</html>
 
-{% block title %}Store Homepage{% endblock %}
-
-{% block content %}
-
-<div id="content">
-
-<br><br>
-
-<h1>Welcome To BasicStore Online</h1>
-<h2>Search For An Item</h2><br>
-
-<form action="?" method="GET" onsubmit="search();return false;">
-	<input type="text" id="searchItem" value=""/>
-	<input class="button" type="submit" value="Search" />
-</form>
-
-<br><br>
-
-<table id="results">
-<tr>
-    <th>Name</th>
-    <th>Quantity</th>
-    <th>Price</th>
-</tr>
-</table>
-
-<p id="stat"></p>
-
-</div>
-{% endblock %}
